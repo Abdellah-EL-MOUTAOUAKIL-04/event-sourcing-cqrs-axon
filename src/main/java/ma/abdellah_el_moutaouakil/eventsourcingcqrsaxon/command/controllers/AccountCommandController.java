@@ -3,9 +3,11 @@ package ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.controllers;
 import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.commands.AddAccountCommand;
 import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.commands.CreditAccountCommand;
 import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.commands.DebitAccountCommand;
+import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.commands.UpdateAccountStatusCommand;
 import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.dtos.AddNewAccountRequestDTO;
-import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.enums.CreditAccountDTO;
-import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.enums.DebitAccountDTO;
+import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.dtos.CreditAccountDTO;
+import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.dtos.DebitAccountDTO;
+import ma.abdellah_el_moutaouakil.eventsourcingcqrsaxon.command.dtos.UpdateAccountStatusDTO;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +44,17 @@ public class AccountCommandController {
     public CompletableFuture<String> creditAccount(@RequestBody CreditAccountDTO request){
         CompletableFuture<String> result = this.commandGateway.send(new CreditAccountCommand(
                 request.accountId(),
-                request.amount()
+                request.amount(),
+                "MAD"
+        ));
+        return result;
+    }
+
+    @PutMapping("/updateStatus")
+    public CompletableFuture<String> updateStatus(@RequestBody UpdateAccountStatusDTO request){
+        CompletableFuture<String> result = this.commandGateway.send(new UpdateAccountStatusCommand(
+                request.accountId(),
+                request.status()
         ));
         return result;
     }

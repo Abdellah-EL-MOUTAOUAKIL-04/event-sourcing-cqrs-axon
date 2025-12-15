@@ -17,7 +17,7 @@ services:
     ports:
       - "8088:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: med@gmail.com
+      PGADMIN_DEFAULT_EMAIL: abde@gmail.com
       PGADMIN_DEFAULT_PASSWORD: azer
     volumes:
       - accounts_pgadmin_data:/var/lib/pgadmin
